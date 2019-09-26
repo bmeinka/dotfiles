@@ -1,0 +1,31 @@
+# open common things
+super + {Return,o,s,v}
+	{st,dmenu_run,qutebrowser,vlc}
+
+# move windows around
+super {_, + shift} {h,j,k,l}
+	bspc node {-f,-n} {west,south,north,east}
+super + space
+	bspc node -s last -f last
+super {_, + shift} + f
+	bspc node -t {~fullscreen, ~floating}
+super + r
+	bspc node @parent -R 90
+super + q
+	bspc node -c
+super + {_, shift} {1-9}
+	bspc {desktop -f, node -d} {1-9}
+
+# session management
+super + shift + q
+	bspc quit
+
+# screen brightness
+XF86MonBrightness{Up,Down} + {_,shift,super}
+	xbacklight -{inc,dec} {5,10,100}
+
+# volume
+XF86Audio{Raise,Lower}Volume
+	pamixer -{i,d} 5
+XF86AudioMute
+	pamixer -t

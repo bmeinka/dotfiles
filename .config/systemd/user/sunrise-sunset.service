@@ -1,0 +1,6 @@
+[Unit]
+Description=update sunrise and sunset times
+
+[Service]
+Type=oneshot
+ExecStart=/home/bryon/.local/bin/sunrise-sunset

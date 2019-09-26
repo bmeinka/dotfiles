@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+import os
+import requests
+import json
+from datetime import datetime
+
+URL = "https://api.sunrise-sunset.org/json"
+PATH = os.path.expanduser("~/.local/share/sunrise-sunset")
+PARAMS = {'lat': 38.597807, 'lng': -81.699419, 'formatted': 0}
+
+if __name__ == '__main__':
+    rv = requests.get(URL, params=PARAMS)
+    data = rv.json()
+    if 'status' in data and data['status'] == 'OK':
+        with open(PATH, 'w') as f:
+            json.dump(data['results'], f)

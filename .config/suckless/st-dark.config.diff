@@ -1,0 +1,97 @@
+--- config.def.h	2019-09-26 11:38:19.440559332 -0400
++++ config.h	2019-09-26 11:38:12.884104175 -0400
+@@ -5,7 +5,7 @@
+  *
+  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
+  */
+-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
++static char *font = "Source Code Pro:size=13:antialias=true:autohint=true";
+ static int borderpx = 2;
+ 
+ /*
+@@ -63,7 +63,7 @@
+ static int bellvolume = 0;
+ 
+ /* default TERM value */
+-char *termname = "st-256color";
++char *termname = "xterm-256color";
+ 
+ /*
+  * spaces per tab
+@@ -85,30 +85,30 @@
+ /* Terminal colors (16 first used in escape sequence) */
+ static const char *colorname[] = {
+ 	/* 8 normal colors */
+-	"black",
+-	"red3",
+-	"green3",
+-	"yellow3",
+-	"blue2",
+-	"magenta3",
+-	"cyan3",
+-	"gray90",
++	"#272822",
++	"#f92672",
++	"#a6e22e",
++	"#f4bf75",
++	"#66d9ef",
++	"#ae81ff",
++	"#a1efe4",
++	"#f8f8f2",
+ 
+ 	/* 8 bright colors */
+-	"gray50",
+-	"red",
+-	"green",
+-	"yellow",
+-	"#5c5cff",
+-	"magenta",
+-	"cyan",
+-	"white",
++	"#272822",
++	"#f92672",
++	"#a6e22e",
++	"#f4bf75",
++	"#66d9ef",
++	"#ae81ff",
++	"#a1efe4",
++	"#f8f8f2",
+ 
+ 	[255] = 0,
+ 
+ 	/* more colors can be added after 255 to use with DefaultXX */
+-	"#cccccc",
+-	"#555555",
++	"#272822",
++	"#f8f8f2",
+ };
+ 
+ 
+@@ -116,10 +116,10 @@
+  * Default colors (colorname index)
+  * foreground, background, cursor, reverse cursor
+  */
+-unsigned int defaultfg = 7;
+-unsigned int defaultbg = 0;
+-static unsigned int defaultcs = 256;
+-static unsigned int defaultrcs = 257;
++unsigned int defaultfg = 257;
++unsigned int defaultbg = 256;
++static unsigned int defaultcs = 257;
++static unsigned int defaultrcs = 256;
+ 
+ /*
+  * Default shape of cursor
+@@ -175,9 +175,12 @@
+ 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
+ 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
+ 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
++	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
++	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+ 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+ 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
+ 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
++	{ TERMMOD,              XK_Escape,      keyboard_select,{ 0 } },
+ };
+ 
+ /*

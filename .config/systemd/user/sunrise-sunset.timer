@@ -1,0 +1,8 @@
+[Unit]
+Description=update sunrise and sunset times
+
+[Timer]
+OnCalendar=hourly
+
+[Install]
+WantedBy=default.target

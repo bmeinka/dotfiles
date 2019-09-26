@@ -1,51 +1,46 @@
 call plug#begin('~/.local/share/nvim/plug')
-Plug 'w0rp/ale'
-Plug 'OmniSharp/omnisharp-vim'
+" syntax extensions
 Plug 'OrangeT/vim-csharp'
 Plug 'dag/vim-fish'
 Plug 'cespare/vim-toml'
 Plug 'calviken/vim-gdscript3'
+Plug 'kovetskiy/sxhkd-vim'
+Plug 'tikhomirov/vim-glsl'
+
+" completion and linting
+"Plug 'w0rp/ale'
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'Raimondi/delimitMate'
 call plug#end()
 
-" async connection to omnisharp server
-let g:OmniSharp_server_stdio = 1
+let g:deoplete#enable_at_startup = 1
 
-" highlight types
-highlight link csUserIdentifier Normal
-let g:OmniSharp_highlight_types = 2
+" TODO: confiugre a python language server
 
-" only use omnisharp for c# linting
-let g:ale_linters = {'cs': ['OmniSharp']}
+let g:LanguageClient_serverCommands = {
+	\ 'c': ['clangd'],
+	\}
+	"\ 'glsl': ['glslls', '--stdin'],
+"let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_serverStderr = '/tmp/clangd.stderr'
 
-nnoremap gd :OmniSharpGotoDefinition<CR>
-nnoremap <Leader>fi :OmniSharpFindImplementations<CR>
-nnoremap <Leader>fs :OmniSharpFindSymbol<CR>
-nnoremap <Leader>fu :OmniSharpFindUsages<CR>
-nnoremap <Leader>fm :OmniSharpFindMembers<CR>
+let g:delimitMate_expand_cr = 2
 
-nnoremap <Leader>fx :OmniSharpFixUsings<CR>
-nnoremap <Leader>tt :OmniSharpTypeLookup<CR>
-nnoremap <Leader>dc :OmniSharpDocumentation<CR>
-nnoremap <Leader>dh :OmniSharpSignatureHelp<CR>
+set completeopt=menuone,preview,noinsert,noselect
+autocmd CompleteDone * silent! pclose
 
-nnoremap <Leader><Space> :OmniSharpGetCodeActions<CR>
-xnoremap <Leader><Space> :call OmniSharp#GetCodeActions('visual')<CR>
-nnoremap <buffer> <Leader>cc :OmniSharpGlobalCodeCheck<CR>
-nnoremap <Leader>cf :OmniSharpCodeFormat<CR>
-
-nnoremap <F2> :OmniSharpRename<CR>
-
-" TODO: experiment with longest, noinsert and noselect
-set completeopt=menuone,preview
+autocmd BufRead,BufNewFile *.h set filetype=c
 
 set list " show certain invisibles
 set listchars=tab:·\ ,trail:$
 
-set tabstop=4
-set shiftwidth=4
-
 set textwidth=80 " lines end at 80
 set nowrap       " but lines longer than 80 don't get wrapped
+set colorcolumn=81 " draw a line at the first column out of bounds
+highlight ColorColumn ctermbg=darkgrey
+highlight Visual ctermbg=yellow ctermfg=black
 
 set nohlsearch " disable search highlighting
 
@@ -55,5 +50,10 @@ nnoremap _ :set rnu!<CR>
 
 set background=light
 
-noremap <F1> <nop>
 nnoremap <F1> :pc<CR>:ccl<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+nnoremap <F5> :!./run<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+
+inoremap <F1> <nop>

@@ -1,0 +1,100 @@
+[colors]
+background = #272822
+foreground = #f8f8f2
+highlight = #a6e22e
+alert = #f92672
+
+[bar/top]
+width = 100%
+background = ${colors.background}
+foreground = ${colors.foreground}
+font-0 = "Source Code Pro:size=12;0"
+font-1 = "Font Awesome 5 Free:style=Solid:size=12;0"
+font-2 = "Font Awesome 5 Free:style=Regular:size=12;0"
+font-3 = "Symbola:size=12;0"
+line-size = 2
+line-color = ${colors.foreground}
+module-margin = 1
+padding = 1
+modules-left = bspwm
+modules-center = date
+modules-right = network xbacklight pulseaudio battery menu
+
+[module/bspwm]
+type = internal/bspwm
+label-empty =
+label-occupied = " %name% "
+label-focused = " %name% "
+label-focused-underline = ${colors.highlight}
+
+[module/date]
+type = internal/date
+interval = 1.0
+date = "%A %m/%d/%Y %r"
+
+[module/pulseaudio]
+type = internal/pulseaudio
+label-volume = %percentage%%
+format-volume = <ramp-volume> <label-volume>
+format-volume-underline = ${colors.foreground}
+label-muted = muted
+format-muted =  <label-muted>
+format-muted-underline = ${colors.alert}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+[module/xbacklight]
+type = internal/xbacklight
+format = <ramp> <label>
+label = %percentage%%
+format-underline = ${colors.foreground}
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+label-charging = +%percentage%%
+format-charging =  <label-charging>
+format-charging-underline = ${colors.highlight}
+label-discharging = -%percentage%%
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-underline = ${colors.alert}
+label-full = %percentage%%
+format-full = <ramp-capacity> <label-full>
+format-full-underline = ${colors.foreground}
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+[module/network]
+type = internal/network
+interface = wlp3s0
+label-connected = %signal%%
+format-connected =  <label-connected>
+format-connected-underline = ${colors.highlight}
+label-disconnected = disconnected
+format-disconnected =  <label-disconnected>
+format-disconnected-underline = ${colors.alert}
+
+[module/menu]
+type = custom/menu
+expand-right = false
+label-open = 
+label-close = 
+label-separator = "  "
+menu-0-0 = Shut Down
+menu-0-0-exec = systemctl poweroff
+menu-0-1 = Reboot
+menu-0-1-exec = systemctl reboot
+menu-0-2 = Logout
+menu-0-2-exec = loginctl terminate-user $USER
+
+#  a power menu

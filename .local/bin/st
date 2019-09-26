@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+import os
+import json
+from datetime import datetime
+
+
+save_path = os.path.expanduser('~/.local/share/sunrise-sunset')
+
+
+def get_sunrise_sunset():
+    with open(save_path) as f:
+        info = json.load(f)
+    sunrise = datetime.fromisoformat(info['sunrise'])
+    sunset = datetime.fromisoformat(info['sunset'])
+    return sunrise, sunset
+
+
+if __name__ == '__main__':
+    sunrise, sunset = get_sunrise_sunset()
+    assert sunrise.tzinfo == sunset.tzinfo
+    now = datetime.now(sunrise.tzinfo)
+    if sunrise <= now <= sunset:
+        os.system('st-light')
+    else:
+        os.system('st-dark')
