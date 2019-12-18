@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
+""" Determine which terminal color scheme to use based on if the sun is up or down """
 import os
 import json
 from datetime import datetime
 
-
+# see ~/.local/bin/sunrise-sunset
 save_path = os.path.expanduser('~/.local/share/sunrise-sunset')
 
 
 def get_sunrise_sunset():
+    """ read the time the sun rises and sets from file """
     with open(save_path) as f:
         info = json.load(f)
     sunrise = datetime.fromisoformat(info['sunrise'])
