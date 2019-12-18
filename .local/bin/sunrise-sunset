@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+""" fetch the time of sunrise and sunset and save to a local file """
 import os
 import requests
 import json
@@ -6,6 +7,7 @@ from datetime import datetime
 
 URL = "https://api.sunrise-sunset.org/json"
 PATH = os.path.expanduser("~/.local/share/sunrise-sunset")
+# TODO: parametrize location info
 PARAMS = {'lat': 38.597807, 'lng': -81.699419, 'formatted': 0}
 
 if __name__ == '__main__':
